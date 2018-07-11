@@ -460,3 +460,7 @@ public class DialogAdapter extends RecyclerView.Adapter<DialogAdapter.ViewHolder
     }
 	
 }
+
+/*
+    Copyright EuphoriaVK
+ */
