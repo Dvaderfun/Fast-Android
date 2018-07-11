@@ -108,12 +108,4 @@ public class VKUser implements Serializable {
         }
         return vkUsers;
     }
-
-    @Override
-    public String toString() {
-        if (full_name == null) {
-            full_name = first_name.concat(" ").concat(last_name);
-        }
-        return full_name;
-    }
 }

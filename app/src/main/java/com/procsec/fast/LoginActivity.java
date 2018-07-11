@@ -3,6 +3,7 @@ package com.procsec.fast;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +20,7 @@ import android.widget.ProgressBar;
 import com.procsec.fast.common.ThemeManager;
 import com.procsec.fast.util.Constants;
 import com.procsec.fast.vkapi.Auth;
+import com.procsec.fast.vkapi.VKApi;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -67,9 +69,23 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        Drawable restart = getResources().getDrawable(R.drawable.ic_refresh);
+        Drawable poll = getResources().getDrawable(R.drawable.ic_poll);
+
+        restart.setTint(ThemeManager.color);
+        poll.setTint(ThemeManager.color);
+
+        menu.getItem(0).setIcon(restart);
+        menu.getItem(1).setIcon(poll);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.restart:
+                VKApi.initBaseUrl();
                 recreate();
                 break;
             case R.id.proxy:

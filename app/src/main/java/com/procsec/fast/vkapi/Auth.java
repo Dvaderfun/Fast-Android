@@ -7,16 +7,25 @@ import java.net.URLEncoder;
 public class Auth {
 
     private static final String TAG = "Kate.Auth";
+
     public static String redirect_url = "https://oauth.vk.com/blank.html";
 
+
     public static String getUrl(String api_id, String settings) {
-        String url = "https://" + VKApi.OAUTH + "/authorize?client_id=" + api_id + "&display=mobile&scope=" + settings + "&redirect_uri=" + URLEncoder.encode(redirect_url) + "&response_type=token"
-                + "&v=" + URLEncoder.encode(VKApi.API_VERSION);
-        return url;
+        return "https://" +
+                VKApi.OAUTH +
+                "/authorize?client_id=" +
+                api_id +
+                "&display=mobile&scope=" +
+                settings +
+                "&redirect_uri=" +
+                URLEncoder.encode(redirect_url) +
+                "&response_type=token" +
+                "&v=" +
+                URLEncoder.encode(VKApi.API_VERSION);
     }
 
     public static String getSettings() {
-        //http://vk.com/dev/permissions
         return "notify,friends,photos,audio,video,docs,status,notes,pages,wall,groups,messages,offline,notifications";
     }
 

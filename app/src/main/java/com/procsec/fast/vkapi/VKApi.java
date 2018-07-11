@@ -2,7 +2,9 @@ package com.procsec.fast.vkapi;
 
 import android.util.Log;
 
+import com.procsec.fast.fragment.FragmentSettings;
 import com.procsec.fast.util.Account;
+import com.procsec.fast.util.Utils;
 import com.procsec.fast.vkapi.model.VKAudio;
 import com.procsec.fast.vkapi.model.VKChat;
 import com.procsec.fast.vkapi.model.VKDocument;
@@ -35,9 +37,8 @@ public class VKApi {
 
     private static final int MAX_TRIES = 3;
 
-    public static String API = "api.vk.com";
     public static String OAUTH = "oauth.vk.com";
-
+    private static String API = "api.vk.com";
     private static String BASE_URL;
 
     private static String language = Locale.getDefault().getLanguage();
@@ -48,8 +49,14 @@ public class VKApi {
         initBaseUrl();
     }
 
-    private void initBaseUrl() {
-        BASE_URL = "https://" + API + "/";
+    static {
+        initBaseUrl();
+    }
+
+    public static void initBaseUrl() {
+        API = Utils.getPrefs().getString(FragmentSettings.KEY_API_LINK, "api.vk.com");
+        OAUTH = Utils.getPrefs().getString(FragmentSettings.KEY_OAUTH_LINK, "oauth.vk.com");
+        BASE_URL = "https://" + API + "/method/";
     }
 
     public static Account getAccount() {
@@ -137,7 +144,8 @@ public class VKApi {
             connection.setDoOutput(is_post);
             connection.setDoInput(true);
             connection.setRequestMethod(is_post ? "POST" : "GET");
-            connection.setRequestProperty("Accept-Encoding", "gzip");
+            if (false)
+                connection.setRequestProperty("Accept-Encoding", "gzip");
             if (is_post)
                 connection.getOutputStream().write(body.getBytes("UTF-8"));
             int code = connection.getResponseCode();

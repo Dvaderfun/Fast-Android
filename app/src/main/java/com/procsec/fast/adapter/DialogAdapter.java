@@ -1,9 +1,11 @@
 package com.procsec.fast.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
@@ -21,8 +23,8 @@ import com.procsec.fast.R;
 import com.procsec.fast.common.FApp;
 import com.procsec.fast.common.ThemeManager;
 import com.procsec.fast.db.MemoryCache;
-import com.procsec.fast.util.Account;
 import com.procsec.fast.util.ArrayUtil;
+import com.procsec.fast.util.Utils;
 import com.procsec.fast.vkapi.VKApi;
 import com.procsec.fast.vkapi.model.VKAttachment;
 import com.procsec.fast.vkapi.model.VKGroup;
@@ -34,7 +36,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -46,16 +47,13 @@ public class DialogAdapter extends RecyclerView.Adapter<DialogAdapter.ViewHolder
     private LayoutInflater inflater;
     private Context context;
 
-    private Account account;
-
     private Comparator<VKMessage> comparator;
     private OnItemClickListener listener;
     private int position;
 
-    public DialogAdapter(ArrayList<VKMessage> messages) {
+    public DialogAdapter(Context context, ArrayList<VKMessage> messages) {
         this.messages = messages;
-        this.account = VKApi.getAccount();
-        this.context = FApp.context;
+        this.context = context;
         this.inflater = LayoutInflater.from(context);
 
         comparator = new Comparator<VKMessage>() {
@@ -166,13 +164,13 @@ public class DialogAdapter extends RecyclerView.Adapter<DialogAdapter.ViewHolder
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = inflater.inflate(R.layout.fragment_messages_list, parent, false);
         return new ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(DialogAdapter.ViewHolder holder, int pos) {
+    public void onBindViewHolder(@NonNull DialogAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int pos) {
         this.position = pos;
         initListeners(holder.itemView, pos);
 
@@ -186,11 +184,11 @@ public class DialogAdapter extends RecyclerView.Adapter<DialogAdapter.ViewHolder
             holder.title.setText(msg.title);
         }
 
-        holder.date.setText(new SimpleDateFormat("HH:mm").format(msg.date * 1000));
+        holder.date.setText(Utils.parseDate(msg.date * 1000));
 
         holder.body.setText(msg.body);
 
-        String avatar_image = "";
+        String avatar_image;
 
         if (group == null) {
             if (msg.isChat()) {
@@ -267,7 +265,8 @@ public class DialogAdapter extends RecyclerView.Adapter<DialogAdapter.ViewHolder
 
         if (!msg.is_out && !msg.read_state) {
             holder.counter.setVisibility(View.VISIBLE);
-            holder.counter.setText(msg.unread + "");
+            String s = msg.unread + "";
+            holder.counter.setText(s);
 
             GradientDrawable gd = new GradientDrawable();
             gd.setColor(ThemeManager.color);
@@ -278,7 +277,7 @@ public class DialogAdapter extends RecyclerView.Adapter<DialogAdapter.ViewHolder
             holder.counter.setVisibility(View.GONE);
         }
 
-        if (msg.read_state && msg.unread == 0) {
+        if (msg.read_state || msg.unread == 0) {
             holder.container.setBackground(null);
             holder.container.setBackgroundColor(Color.TRANSPARENT);
         }

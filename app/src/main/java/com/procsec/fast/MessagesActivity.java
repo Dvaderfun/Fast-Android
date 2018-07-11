@@ -67,8 +67,6 @@ public class MessagesActivity extends AppCompatActivity implements TextWatcher {
         getIntentData();
         initViews();
 
-        Toast.makeText(this, userId + "", 0).show();
-
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
@@ -79,6 +77,8 @@ public class MessagesActivity extends AppCompatActivity implements TextWatcher {
         getSupportActionBar().setSubtitle(getSubtitleStatus());
 
         ThemeManager.applyToolbarStyles(toolbar);
+
+        send.getDrawable().setTint(Color.GRAY);
 
         recyclerView.setHasFixedSize(false);
         recyclerView.setLayoutManager(layoutManager);
@@ -153,9 +153,10 @@ public class MessagesActivity extends AppCompatActivity implements TextWatcher {
         this.userId = intent.getIntExtra("user_id", -1);
         this.chatId = intent.getIntExtra("chat_id", -1);
         this.groupId = intent.getIntExtra("group_id", -1);
-        this.membersCount = intent.getIntExtra("members_count", -1);
         this.photo = intent.getStringExtra("photo");
-        this.chronologyOrder = intent.getBooleanExtra("from_start", false);
+        //this.membersCount = intent.getIntExtra("members_count", -1);
+
+        //this.chronologyOrder = intent.getBooleanExtra("from_start", false);
     }
 
     private void createAdapter(ArrayList<VKMessage> messages) {

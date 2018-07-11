@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.procsec.fast.db.DBHelper;
+import com.procsec.fast.vkapi.VKApi;
 
 import java.util.Locale;
 
@@ -24,5 +25,7 @@ public class FApp extends Application {
         context = this;
         database = DBHelper.getInstance().getWritableDatabase();
         locale = Locale.getDefault();
+
+        VKApi.initBaseUrl();
     }
 }

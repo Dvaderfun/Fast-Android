@@ -8,6 +8,9 @@ import com.procsec.fast.vkapi.model.VKUser;
 import java.util.ArrayList;
 
 public class MemoryCache {
+
+    private static VKUser u;
+
     private static SparseArray<VKUser> users = new SparseArray<>(20);
     private static SparseArray<VKGroup> groups = new SparseArray<>(20);
 

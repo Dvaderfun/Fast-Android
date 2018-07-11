@@ -120,7 +120,6 @@ public class FragmentDialogs extends Fragment implements SwipeRefreshLayout.OnRe
                 HashSet<Integer> groupIds = new HashSet<>();
 
                 if (offset == 0) {
-                    // for update navigation header status
                     userIds.add(VKApi.getAccount().id);
                 }
 
@@ -136,16 +135,13 @@ public class FragmentDialogs extends Fragment implements SwipeRefreshLayout.OnRe
                         }
                     }
                 }
-                //Integer[] ids = new Integer[userIds.size()];
-                //userIds.toArray(ids);
 
                 final ArrayList<VKUser> users = VKApi.getProfiles(userIds, VKUser.FIELDS_DEFAULT);
 
                 CacheStorage.insert(DBHelper.USERS_TABLE, users);
 
-                ArrayList<VKGroup> groups = null;
                 if (hasGroups) {
-                    groups = VKApi.getGroupsById(groupIds, "", "");
+                    ArrayList<VKGroup> groups = VKApi.getGroupsById(groupIds, "", "");
                     CacheStorage.insert(DBHelper.GROUPS_TABLE, groups);
                 }
             }
@@ -159,7 +155,6 @@ public class FragmentDialogs extends Fragment implements SwipeRefreshLayout.OnRe
                 EventBus.getDefault().postSticky(MemoryCache.getUser(VKApi.getAccount().restore().id));
                 createAdapter(messages, offset);
                 refreshLayout.setRefreshing(false);
-                //setTitle(VKMessage.count);
 
                 if (!messages.isEmpty()) {
                     loading = false;
@@ -171,7 +166,6 @@ public class FragmentDialogs extends Fragment implements SwipeRefreshLayout.OnRe
                 super.error(e);
 
                 refreshLayout.setRefreshing(false);
-                //Snackbar.make(fab, e.getMessage(), Snackbar.LENGTH_LONG).show();
             }
         });
     }
@@ -191,7 +185,7 @@ public class FragmentDialogs extends Fragment implements SwipeRefreshLayout.OnRe
             adapter.notifyDataSetChanged();
             return;
         }
-        adapter = new DialogAdapter(messages);
+        adapter = new DialogAdapter(getActivity(), messages);
         adapter.setListener(this);
         recyclerView.setAdapter(adapter);
     }
@@ -207,9 +201,10 @@ public class FragmentDialogs extends Fragment implements SwipeRefreshLayout.OnRe
         intent.putExtra("user_id", user.id);
         intent.putExtra("chat_id", item.chat_id);
         intent.putExtra("group_id", group != null ? group.id : -1);
-        intent.putExtra("members_count", item.isChat() ? item.users_count : -1);
-        intent.putExtra("from_start", fromStart);
-
+        if (false) {
+            intent.putExtra("members_count", item.isChat() ? item.users_count : -1);
+            intent.putExtra("from_start", fromStart);
+        }
         startActivity(intent);
     }
 

@@ -100,7 +100,6 @@ public class LongPollService extends Service {
                     e.printStackTrace();
                     server = null;
                     error = true;
-                    continue;
                 }
 
             }

@@ -14,7 +14,10 @@ public class FragmentSettings extends PreferenceFragmentCompat implements Prefer
     public static final String KEY_COLOR = "color";
     public static final String KEY_QUICKMOON = "quickmoon";
     public static final String KEY_YELLOW_MOON = "light_moon";
-    private Preference quickmoon, yellow_moon, color;
+    public static final String KEY_API_LINK = "api_l";
+    public static final String KEY_OAUTH_LINK = "oauth_l";
+
+    private Preference yellow_moon;
     private String key;
 
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -25,8 +28,9 @@ public class FragmentSettings extends PreferenceFragmentCompat implements Prefer
     private void init() {
         setPreferencesFromResource(R.xml.prefs, key);
 
-        color = findPreference(KEY_COLOR);
-        quickmoon = findPreference(KEY_QUICKMOON);
+        Preference color = findPreference(KEY_COLOR);
+        Preference quickmoon = findPreference(KEY_QUICKMOON);
+
         yellow_moon = findPreference(KEY_YELLOW_MOON);
 
         color.setOnPreferenceChangeListener(this);
@@ -47,7 +51,8 @@ public class FragmentSettings extends PreferenceFragmentCompat implements Prefer
         switch (p.getKey()) {
             case KEY_COLOR:
                 ThemeManager.putTheme((String) newVal);
-                getActivity().recreate();
+                if (getActivity() != null)
+                    getActivity().recreate();
                 break;
             case KEY_QUICKMOON:
                 yellow_moon.setVisible((boolean) newVal);
