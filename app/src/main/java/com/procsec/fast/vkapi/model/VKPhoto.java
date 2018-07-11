@@ -1,68 +1,106 @@
 package com.procsec.fast.vkapi.model;
 
-import com.procsec.fast.vkapi.*;
-import java.io.*;
-import org.json.*;
+import org.json.JSONObject;
+
+import java.io.Serializable;
 
 
 public class VKPhoto implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    /** Photo ID, positive number */
+    /**
+     * Photo ID, positive number
+     */
     public int id;
 
-    /** Photo album ID. */
+    /**
+     * Photo album ID.
+     */
     public int album_id;
 
-    /** ID of the user or community that owns the photo. */
+    /**
+     * ID of the user or community that owns the photo.
+     */
     public int owner_id;
 
-    /** Width (in pixels) of the original photo. */
+    /**
+     * Width (in pixels) of the original photo.
+     */
     public int width;
 
-    /** Height (in pixels) of the original photo. */
+    /**
+     * Height (in pixels) of the original photo.
+     */
     public int height;
 
-    /** Text describing the photo. */
+    /**
+     * Text describing the photo.
+     */
     public String text;
 
-    /** Date (in Unix time) the photo was added. */
+    /**
+     * Date (in Unix time) the photo was added.
+     */
     public long date;
 
-    /** URL of image with maximum size 75x75px. */
+    /**
+     * URL of image with maximum size 75x75px.
+     */
     public String photo_75;
 
-    /** URL of image with maximum size 130x130px. */
+    /**
+     * URL of image with maximum size 130x130px.
+     */
     public String photo_130;
 
-    /** URL of image with maximum size 604x604px. */
+    /**
+     * URL of image with maximum size 604x604px.
+     */
     public String photo_604;
 
-    /** URL of image with maximum size 807x807px. */
+    /**
+     * URL of image with maximum size 807x807px.
+     */
     public String photo_807;
 
-    /** URL of image with maximum size 1280x1024px. */
+    /**
+     * URL of image with maximum size 1280x1024px.
+     */
     public String photo_1280;
 
-    /** URL of image with maximum size 2560x2048px. */
+    /**
+     * URL of image with maximum size 2560x2048px.
+     */
     public String photo_2560;
 
-    /** Information whether the current user liked the photo. */
+    /**
+     * Information whether the current user liked the photo.
+     */
     public boolean user_likes;
 
-    /** Whether the current user can comment on the photo */
+    /**
+     * Whether the current user can comment on the photo
+     */
     public boolean can_comment;
 
-    /** Number of likes on the photo. */
+    /**
+     * Number of likes on the photo.
+     */
     public int likes;
 
-    /** Number of comments on the photo. */
+    /**
+     * Number of comments on the photo.
+     */
     public int comments;
 
-    /** Number of tags on the photo. */
+    /**
+     * Number of tags on the photo.
+     */
     public int tags;
 
-    /** An access key using for get information about hidden objects. */
+    /**
+     * An access key using for get information about hidden objects.
+     */
     public String access_key;
 
     public VKPhoto() {

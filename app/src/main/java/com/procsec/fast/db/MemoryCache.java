@@ -1,8 +1,11 @@
 package com.procsec.fast.db;
 
-import android.util.*;
-import com.procsec.fast.vkapi.model.*;
-import java.util.*;
+import android.util.SparseArray;
+
+import com.procsec.fast.vkapi.model.VKGroup;
+import com.procsec.fast.vkapi.model.VKUser;
+
+import java.util.ArrayList;
 
 public class MemoryCache {
     private static SparseArray<VKUser> users = new SparseArray<>(20);

@@ -1,16 +1,27 @@
 package com.procsec.fast.view;
 
-import android.content.*;
-import android.content.res.*;
-import android.graphics.*;
-import android.graphics.drawable.*;
-import android.net.*;
-import android.support.annotation.*;
-import android.support.v4.content.*;
-import android.util.*;
-import com.procsec.fast.*;
+import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.graphics.Shader;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.support.annotation.ColorInt;
+import android.support.annotation.ColorRes;
+import android.support.annotation.DrawableRes;
+import android.support.v4.content.ContextCompat;
+import android.util.AttributeSet;
 
-import ru.lischenko_dev.fastmessenger.R;
+import com.procsec.fast.R;
 
 public class CircleImageView extends android.support.v7.widget.AppCompatImageView {
 

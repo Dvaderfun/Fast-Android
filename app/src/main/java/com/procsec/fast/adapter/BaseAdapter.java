@@ -1,19 +1,20 @@
 package com.procsec.fast.adapter;
 
-import android.content.*;
-import android.support.v7.widget.*;
-import android.view.*;
-import java.util.*;
+import android.content.Context;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 
-public class BaseAdapterr<T, VH extends RecyclerView.ViewHolder>
-extends RecyclerView.Adapter<VH> {
+import java.util.ArrayList;
+
+public class BaseAdapter<T, VH extends RecyclerView.ViewHolder>
+        extends RecyclerView.Adapter<VH> {
+    protected Context context;
+    protected LayoutInflater inflater;
     private ArrayList<T> values;
     private ArrayList<T> cleanValues;
 
-    protected Context context;
-    protected LayoutInflater inflater;
-
-    public BaseAdapterr(Context context, ArrayList<T> values) {
+    public BaseAdapter(Context context, ArrayList<T> values) {
         this.context = context;
         this.values = values;
 

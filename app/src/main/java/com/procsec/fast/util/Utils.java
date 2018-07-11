@@ -1,65 +1,82 @@
 package com.procsec.fast.util;
 
-import android.content.*;
-import android.content.res.*;
-import android.graphics.*;
-import android.net.*;
-import android.preference.*;
-import android.support.annotation.*;
-import android.support.v4.graphics.*;
-import android.support.v7.app.*;
-import android.util.*;
-import com.procsec.fast.*;
-import com.procsec.fast.common.*;
-import com.procsec.fast.io.*;
-import com.squareup.picasso.*;
-import java.io.*;
-import java.net.*;
-import java.text.*;
-import java.util.*;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
+import android.net.ConnectivityManager;
+import android.preference.PreferenceManager;
+import android.support.annotation.ColorInt;
+import android.support.v4.graphics.ColorUtils;
+import android.support.v7.app.AlertDialog;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 
-import ru.lischenko_dev.fastmessenger.R;
+import com.procsec.fast.R;
+import com.procsec.fast.common.FApp;
+import com.procsec.fast.io.BytesOutputStream;
+import com.squareup.picasso.Transformation;
+
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Utils {
-	
-	public static SimpleDateFormat dateFormatter;
+
+    public static SimpleDateFormat dateFormatter;
     public static SimpleDateFormat dateMonthFormatter;
     public static SimpleDateFormat dateYearFormatter;
-	
-	static {
+
+    static {
         dateFormatter = new SimpleDateFormat("HH:mm"); // 15:57
         dateMonthFormatter = new SimpleDateFormat("d MMM"); // 23 Окт
         dateYearFormatter = new SimpleDateFormat("d MMM, yyyy"); // 23 Окт, 2015
     }
-	
+
     public static float convertDpToPixel(float dp) {
         Resources resources = FApp.context.getResources();
         DisplayMetrics metrics = resources.getDisplayMetrics();
         float px = dp * ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
         return px;
     }
-	
-	public static String parseDate(long date) {
+
+    public static String parseDate(long date) {
         Date currentDate = new Date();
         Date msgDate = new Date(date);
 
         if (currentDate.getYear() > msgDate.getYear()) {
             return dateYearFormatter.format(date);
         } else if (currentDate.getMonth() > msgDate.getMonth()
-				   || currentDate.getDate() > msgDate.getDate()) {
+                || currentDate.getDate() > msgDate.getDate()) {
             return dateMonthFormatter.format(date);
         }
 
         return dateFormatter.format(date);
     }
-	
-	public static long getPeerId(int userId, int chatId, int groupId) {
+
+    public static long getPeerId(int userId, int chatId, int groupId) {
         return groupId > 0 ? (-groupId)
-			: chatId > 0 ? (2_000_000_000 + chatId)
-			: userId;
+                : chatId > 0 ? (2_000_000_000 + chatId)
+                : userId;
     }
-	
-	public static byte[] serialize(Object source) {
+
+    public static byte[] serialize(Object source) {
         try {
             BytesOutputStream bos = new BytesOutputStream();
             ObjectOutputStream out = new ObjectOutputStream(bos);
@@ -72,8 +89,8 @@ public class Utils {
         }
         return null;
     }
-	
-	public static Object deserialize(byte[] source) {
+
+    public static Object deserialize(byte[] source) {
         if (ArrayUtil.isEmpty(source)) {
             return null;
         }
@@ -122,7 +139,7 @@ public class Utils {
         }
         return bm;
     }
-	
+
     public static int pxFromDp(int dp) {
         Resources resources = FApp.context.getResources();
         DisplayMetrics metrics = resources.getDisplayMetrics();
@@ -142,12 +159,12 @@ public class Utils {
     }
 
     public static int getThemeAttrColor(int attr) {
-		TypedValue typedValue = new TypedValue();
-		Resources.Theme theme = FApp.context.getTheme();
-		theme.resolveAttribute(R.attr.colorPrimary, typedValue, true);
-		@ColorInt int color = typedValue.data;
-		
-		return color;
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = FApp.context.getTheme();
+        theme.resolveAttribute(R.attr.colorPrimary, typedValue, true);
+        @ColorInt int color = typedValue.data;
+
+        return color;
     }
 
     public static Bitmap getBitmapFromURL(String src) {

@@ -1,15 +1,78 @@
 package com.procsec.fast.db;
 
-import android.content.*;
-import android.database.*;
-import com.procsec.fast.common.*;
-import com.procsec.fast.util.*;
-import com.procsec.fast.vkapi.*;
-import com.procsec.fast.vkapi.model.*;
-import java.util.*;
+import android.content.ContentValues;
+import android.database.Cursor;
 
-import static com.procsec.fast.db.DBHelper.*;
-import static com.procsec.fast.common.FApp.*;
+import com.procsec.fast.common.FApp;
+import com.procsec.fast.util.ArrayUtil;
+import com.procsec.fast.util.Utils;
+import com.procsec.fast.vkapi.VKApi;
+import com.procsec.fast.vkapi.model.VKAudio;
+import com.procsec.fast.vkapi.model.VKGroup;
+import com.procsec.fast.vkapi.model.VKMessage;
+import com.procsec.fast.vkapi.model.VKPhoto;
+import com.procsec.fast.vkapi.model.VKUser;
+
+import java.util.ArrayList;
+import java.util.Locale;
+
+import static com.procsec.fast.common.FApp.database;
+import static com.procsec.fast.db.DBHelper.ADMIN_LEVER;
+import static com.procsec.fast.db.DBHelper.ALBUM_ID;
+import static com.procsec.fast.db.DBHelper.ARTIST;
+import static com.procsec.fast.db.DBHelper.ATTACHMENTS;
+import static com.procsec.fast.db.DBHelper.AUDIO_ID;
+import static com.procsec.fast.db.DBHelper.BODY;
+import static com.procsec.fast.db.DBHelper.CHAT_ID;
+import static com.procsec.fast.db.DBHelper.DATE;
+import static com.procsec.fast.db.DBHelper.DESCRIPTION;
+import static com.procsec.fast.db.DBHelper.DIALOGS_TABLE;
+import static com.procsec.fast.db.DBHelper.DURATION;
+import static com.procsec.fast.db.DBHelper.FIRST_NAME;
+import static com.procsec.fast.db.DBHelper.FRIENDS_TABLE;
+import static com.procsec.fast.db.DBHelper.FRIEND_ID;
+import static com.procsec.fast.db.DBHelper.FWD_MESSAGES;
+import static com.procsec.fast.db.DBHelper.GROUPS_TABLE;
+import static com.procsec.fast.db.DBHelper.GROUP_ID;
+import static com.procsec.fast.db.DBHelper.HEIGHT;
+import static com.procsec.fast.db.DBHelper.IMPORTANT;
+import static com.procsec.fast.db.DBHelper.IS_ADMIN;
+import static com.procsec.fast.db.DBHelper.IS_CLOSED;
+import static com.procsec.fast.db.DBHelper.IS_OUT;
+import static com.procsec.fast.db.DBHelper.LAST_NAME;
+import static com.procsec.fast.db.DBHelper.LAST_SEEN;
+import static com.procsec.fast.db.DBHelper.MEMBERS_COUNT;
+import static com.procsec.fast.db.DBHelper.MESSAGES_TABLE;
+import static com.procsec.fast.db.DBHelper.MESSAGE_ID;
+import static com.procsec.fast.db.DBHelper.NAME;
+import static com.procsec.fast.db.DBHelper.ONLINE;
+import static com.procsec.fast.db.DBHelper.ONLINE_APP;
+import static com.procsec.fast.db.DBHelper.ONLINE_MOBILE;
+import static com.procsec.fast.db.DBHelper.OWNER_ID;
+import static com.procsec.fast.db.DBHelper.PHOTOS_TABLE;
+import static com.procsec.fast.db.DBHelper.PHOTO_100;
+import static com.procsec.fast.db.DBHelper.PHOTO_1280;
+import static com.procsec.fast.db.DBHelper.PHOTO_130;
+import static com.procsec.fast.db.DBHelper.PHOTO_200;
+import static com.procsec.fast.db.DBHelper.PHOTO_2560;
+import static com.procsec.fast.db.DBHelper.PHOTO_50;
+import static com.procsec.fast.db.DBHelper.PHOTO_604;
+import static com.procsec.fast.db.DBHelper.PHOTO_75;
+import static com.procsec.fast.db.DBHelper.PHOTO_807;
+import static com.procsec.fast.db.DBHelper.READ_STATE;
+import static com.procsec.fast.db.DBHelper.SCREEN_NAME;
+import static com.procsec.fast.db.DBHelper.SEX;
+import static com.procsec.fast.db.DBHelper.STATUS;
+import static com.procsec.fast.db.DBHelper.TEXT;
+import static com.procsec.fast.db.DBHelper.TITLE;
+import static com.procsec.fast.db.DBHelper.TYPE;
+import static com.procsec.fast.db.DBHelper.UNREAD_COUNT;
+import static com.procsec.fast.db.DBHelper.URL;
+import static com.procsec.fast.db.DBHelper.USERS_COUNT;
+import static com.procsec.fast.db.DBHelper.USERS_TABLE;
+import static com.procsec.fast.db.DBHelper.USER_ID;
+import static com.procsec.fast.db.DBHelper.WIDTH;
+import static com.procsec.fast.db.DBHelper._ID;
 
 public class CacheStorage {
     public static void checkOpen() {
@@ -20,9 +83,9 @@ public class CacheStorage {
 
     private static Cursor selectCursor(String table, String column, Object value) {
         return QueryBuilder.query()
-			.select("*").from(table)
-			.where(column.concat(" = ").concat(String.valueOf(value)))
-			.asCursor(database);
+                .select("*").from(table)
+                .where(column.concat(" = ").concat(String.valueOf(value)))
+                .asCursor(database);
     }
 
     private static Cursor selectCursor(String table, String column, int... ids) {
@@ -42,14 +105,14 @@ public class CacheStorage {
 
     private static Cursor selectCursor(String table, String where) {
         return QueryBuilder.query()
-			.select("*").from(table).where(where)
-			.asCursor(database);
+                .select("*").from(table).where(where)
+                .asCursor(database);
     }
 
     private static Cursor selectCursor(String table) {
         return QueryBuilder.query()
-			.select("*").from(table)
-			.asCursor(database);
+                .select("*").from(table)
+                .asCursor(database);
     }
 
     private static int getInt(Cursor cursor, String columnName) {
@@ -105,12 +168,12 @@ public class CacheStorage {
 
     public static ArrayList<VKUser> getFriends(int userId, boolean onlyOnline) {
         Cursor cursor = QueryBuilder.query()
-			.select("*")
-			.from(FRIENDS_TABLE)
-			.leftJoin(USERS_TABLE)
-			.on("friends.friend_id = users.user_id")
-			.where("friends.user_id = " + userId)
-			.asCursor(database);
+                .select("*")
+                .from(FRIENDS_TABLE)
+                .leftJoin(USERS_TABLE)
+                .on("friends.friend_id = users.user_id")
+                .where("friends.user_id = " + userId)
+                .asCursor(database);
 
         ArrayList<VKUser> users = new ArrayList<>(cursor.getCount());
 
@@ -258,7 +321,7 @@ public class CacheStorage {
         user.online = getInt(cursor, ONLINE) == 1;
         user.online_mobile = getInt(cursor, ONLINE_MOBILE) == 1;
         user.online_app = getInt(cursor, ONLINE_APP);
-       // user.deactivated = getString(cursor, DEACTIVATED);
+        // user.deactivated = getString(cursor, DEACTIVATED);
         user.sex = getInt(cursor, SEX);
         return user;
     }
@@ -273,7 +336,7 @@ public class CacheStorage {
         message.body = getString(cursor, BODY);
         message.is_out = getInt(cursor, IS_OUT) == 1;
         message.read_state = getInt(cursor, READ_STATE) == 1;
-       // message.users_count = getInt(cursor, USERS_COUNT);
+        // message.users_count = getInt(cursor, USERS_COUNT);
         message.unread = getInt(cursor, UNREAD_COUNT);
         message.date = getInt(cursor, DATE);
 

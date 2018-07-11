@@ -1,20 +1,6 @@
 package com.procsec.fast.fragment.material;
 
-import android.content.*;
-import android.net.*;
-import android.os.*;
-import android.support.annotation.*;
-import android.support.v4.app.*;
-import android.support.v7.app.*;
-import android.util.*;
-import android.view.*;
-import android.widget.*;
-import com.procsec.fast.adapter.*;
-import com.procsec.fast.util.*;
-import com.procsec.fast.vkapi.*;
-import com.procsec.fast.vkapi.model.*;
-import com.procsec.fast.*;
-import java.util.*;
+import android.support.v4.app.Fragment;
 
 
 public class FragmentVideo extends Fragment {

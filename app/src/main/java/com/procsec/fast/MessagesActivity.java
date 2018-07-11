@@ -37,9 +37,19 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Locale;
 
-import ru.lischenko_dev.fastmessenger.R;
-
 public class MessagesActivity extends AppCompatActivity implements TextWatcher {
+
+    private Toolbar toolbar;
+    private RecyclerView recyclerView;
+    private ImageButton send, attach, smiles;
+    private EditText message;
+    private ProgressBar progress;
+    private LinearLayoutManager layoutManager;
+    private MessageAdapter adapter;
+    private String title, photo;
+    private int userId, chatId, groupId, membersCount;
+    private boolean loading;
+    private boolean chronologyOrder;
 
     @Override
     public void beforeTextChanged(CharSequence p1, int p2, int p3, int p4) {
@@ -48,22 +58,6 @@ public class MessagesActivity extends AppCompatActivity implements TextWatcher {
     @Override
     public void afterTextChanged(Editable p1) {
     }
-
-    private Toolbar toolbar;
-
-    private RecyclerView recyclerView;
-
-    private ImageButton send, attach, smiles;
-    private EditText message;
-    private ProgressBar progress;
-
-    private LinearLayoutManager layoutManager;
-    private MessageAdapter adapter;
-    private String title, photo;
-    private int userId, chatId, groupId, membersCount;
-
-    private boolean loading;
-    private boolean chronologyOrder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

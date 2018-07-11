@@ -1,8 +1,8 @@
 package com.procsec.fast.vkapi;
 
-import android.util.*;
-import com.procsec.fast.vkapi.*;
-import java.net.*;
+import android.util.Log;
+
+import java.net.URLEncoder;
 
 public class Auth {
 

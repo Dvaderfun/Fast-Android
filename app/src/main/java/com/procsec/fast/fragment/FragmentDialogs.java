@@ -17,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.procsec.fast.MessagesActivity;
+import com.procsec.fast.R;
 import com.procsec.fast.adapter.DialogAdapter;
 import com.procsec.fast.common.ThemeManager;
 import com.procsec.fast.concurrent.AsyncCallback;
@@ -36,9 +37,13 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-import ru.lischenko_dev.fastmessenger.R;
-
 public class FragmentDialogs extends Fragment implements SwipeRefreshLayout.OnRefreshListener, DialogAdapter.OnItemClickListener {
+
+    private RecyclerView recyclerView;
+    private SwipeRefreshLayout refreshLayout;
+    private ProgressBar progress;
+    private DialogAdapter adapter;
+    private boolean loading;
 
     @Override
     public void onItemClick(View view, int position) {
@@ -49,13 +54,6 @@ public class FragmentDialogs extends Fragment implements SwipeRefreshLayout.OnRe
     public void onItemLongClick(View view, int position) {
         showDialog(adapter.messages.get(position));
     }
-
-    private RecyclerView recyclerView;
-    private SwipeRefreshLayout refreshLayout;
-    private ProgressBar progress;
-    private DialogAdapter adapter;
-
-    private boolean loading;
 
     @Override
     public void onRefresh() {

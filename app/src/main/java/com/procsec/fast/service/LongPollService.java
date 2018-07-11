@@ -1,26 +1,32 @@
 package com.procsec.fast.service;
 
-import android.app.*;
-import android.content.*;
-import android.os.*;
-import android.util.*;
-import com.procsec.fast.util.*;
-import com.procsec.fast.vkapi.*;
-import com.procsec.fast.vkapi.model.*;
-import java.io.*;
-import org.greenrobot.eventbus.*;
-import org.json.*;
+import android.app.Service;
+import android.content.Intent;
+import android.os.IBinder;
+import android.util.Log;
+
+import com.procsec.fast.util.Utils;
+import com.procsec.fast.vkapi.KException;
+import com.procsec.fast.vkapi.VKApi;
+import com.procsec.fast.vkapi.model.VKMessage;
+
+import org.greenrobot.eventbus.EventBus;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 
 public class LongPollService extends Service {
 
+    public static final String TAG = "VKLongPollHelper";
     public boolean isRunning;
     private Thread updateThread;
-    public static final String TAG = "VKLongPollHelper";
     private String key;
     private String server;
     private Long ts;
     private Object[] pollServer;
-	private boolean error;
+    private boolean error;
 
     public LongPollService() {
 
@@ -50,14 +56,14 @@ public class LongPollService extends Service {
         @Override
         public void run() {
             while (isRunning) {
-				if (VKApi.getAccount().id == 0) {
-					try {
+                if (VKApi.getAccount().id == 0) {
+                    try {
                         Thread.sleep(5_000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                     continue;
-				}
+                }
                 if (!Utils.hasConnection(LongPollService.this)) {
                     try {
                         Thread.sleep(5_000);
@@ -66,15 +72,15 @@ public class LongPollService extends Service {
                     }
                     continue;
                 }
-				if (error) {
-					try {
+                if (error) {
+                    try {
                         Thread.sleep(5_000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-					error = false;
+                    error = false;
                     continue;
-				}
+                }
                 try {
                     if (server == null) {
                         getServer();
@@ -90,11 +96,11 @@ public class LongPollService extends Service {
                         process(updates);
                     }
                 } catch (Exception e) {
-					Log.e("Fast LongPoll", "Error:");
+                    Log.e("Fast LongPoll", "Error:");
                     e.printStackTrace();
                     server = null;
-					error = true;
-					continue;
+                    error = true;
+                    continue;
                 }
 
             }

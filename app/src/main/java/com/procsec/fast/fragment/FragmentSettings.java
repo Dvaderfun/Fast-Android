@@ -5,20 +5,16 @@ import android.os.Bundle;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 
+import com.procsec.fast.R;
 import com.procsec.fast.common.ThemeManager;
 import com.procsec.fast.util.Utils;
 
-import ru.lischenko_dev.fastmessenger.R;
-
-
 public class FragmentSettings extends PreferenceFragmentCompat implements Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
-
-    private Preference quickmoon, yellow_moon, color;
 
     public static final String KEY_COLOR = "color";
     public static final String KEY_QUICKMOON = "quickmoon";
     public static final String KEY_YELLOW_MOON = "light_moon";
-
+    private Preference quickmoon, yellow_moon, color;
     private String key;
 
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {

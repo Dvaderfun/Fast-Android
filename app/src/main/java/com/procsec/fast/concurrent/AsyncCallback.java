@@ -1,7 +1,8 @@
 package com.procsec.fast.concurrent;
 
-import android.app.*;
-import java.lang.ref.*;
+import android.app.Activity;
+
+import java.lang.ref.WeakReference;
 
 public abstract class AsyncCallback implements Runnable {
     private WeakReference<Activity> ref;
@@ -26,22 +27,22 @@ public abstract class AsyncCallback implements Runnable {
             e.printStackTrace();
             if (ref != null && ref.get() != null) {
                 ref.get().runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							error(e);
-						}
-					});
+                    @Override
+                    public void run() {
+                        error(e);
+                    }
+                });
             }
             return;
         }
 
         if (ref != null && ref.get() != null) {
             ref.get().runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						done();
-					}
-				});
+                @Override
+                public void run() {
+                    done();
+                }
+            });
         }
     }
 }

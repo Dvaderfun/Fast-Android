@@ -18,8 +18,6 @@ import com.procsec.fast.vkapi.model.VKChat;
 import com.procsec.fast.vkapi.model.VKUser;
 import com.squareup.picasso.Picasso;
 
-import ru.lischenko_dev.fastmessenger.R;
-
 public class ChatActivityInfo extends AppCompatActivity implements EditText.OnEditorActionListener {
 
     private long cid;

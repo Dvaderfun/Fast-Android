@@ -10,11 +10,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.procsec.fast.R;
 import com.procsec.fast.util.JSONParser;
 
 import org.json.JSONObject;
-
-import ru.lischenko_dev.fastmessenger.R;
 
 public class OTAManager {
 

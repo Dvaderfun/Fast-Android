@@ -1,8 +1,10 @@
 package com.procsec.fast.vkapi.model;
 
-import com.procsec.fast.vkapi.model.*;
-import java.util.*;
-import org.json.*;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * Created by Igor on 04.02.16.

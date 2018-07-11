@@ -1,6 +1,7 @@
 package com.procsec.fast.adapter;
 
-import com.procsec.fast.vkapi.model.*;
+import com.procsec.fast.vkapi.model.VKMessage;
+import com.procsec.fast.vkapi.model.VKUser;
 
 
 public class MessageItem {

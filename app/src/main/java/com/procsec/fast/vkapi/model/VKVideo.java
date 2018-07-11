@@ -1,8 +1,11 @@
 package com.procsec.fast.vkapi.model;
 
-import com.procsec.fast.vkapi.*;
-import java.io.*;
-import org.json.*;
+import com.procsec.fast.vkapi.VKApi;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.Serializable;
 
 
 public class VKVideo implements Serializable {
@@ -76,10 +79,6 @@ public class VKVideo implements Serializable {
         return v;
     }
 
-    public String getVideoUrl() {
-        return getVideoUrl(owner_id, vid);
-    }
-
     public static String getVideoUrl(long owner_id, long video_id) {
         String res = null;
         String base_url = "http://vk.com/";
@@ -87,5 +86,9 @@ public class VKVideo implements Serializable {
         //sample http://vkontakte.ru/video4491835_158963813
         //http://79.gt2.vkadre.ru/assets/videos/f6b1af1e4258-24411750.vk.flv
         return res;
+    }
+
+    public String getVideoUrl() {
+        return getVideoUrl(owner_id, vid);
     }
 }

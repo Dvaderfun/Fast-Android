@@ -1,9 +1,13 @@
 package com.procsec.fast.vkapi.model;
 
-import com.procsec.fast.vkapi.*;
-import java.io.*;
-import java.util.*;
-import org.json.*;
+import com.procsec.fast.vkapi.VKApi;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.Serializable;
+import java.util.ArrayList;
 
 public class VKMessage implements Serializable {
     public static final int UNREAD = 1;        //сообщение не прочитано
@@ -17,56 +21,50 @@ public class VKMessage implements Serializable {
     public static final int FIXED = 256;        //сообщение проверено пользователем на спам
     public static final int MEDIA = 512;        //сообщение содержит медиаконтент
     public static final int BESEDA = 8192;    //беседа
-    private static final long serialVersionUID = 1L;
-
     public static final String ACTION_CHAT_CREATE = "chat_create";
     public static final String ACTION_CHAT_INVITE_USER = "chat_invite_user";
     public static final String ACTION_CHAT_KICK_USER = "chat_kick_user";
-
     public static final String ACTION_CHAT_TITLE_UPDATE = "chat_title_update";
     public static final String ACTION_CHAT_PHOTO_UPDATE = "chat_photo_update";
     public static final String ACTION_CHAT_PHOTO_REMOVE = "chat_photo_remove";
-
+    private static final long serialVersionUID = 1L;
+    public static ArrayList<VKMessage> fws;
     public boolean is_new = false;
     public boolean is_sending = false;
-
     public String action = null;
     public int action_mid = 0;
-	
-	public static ArrayList<VKMessage> fws;
-    
     public int id;
-    
+
     public int user_id;
-    
+
     public long date;
-    
+
     public String title;
-    
+
     public String body;
-    
+
     public boolean read_state;
     public boolean is_out;
-    
+
     public ArrayList<VKAttachment> attachments = new ArrayList<>();
     public ArrayList<VKMessage> fws_messages;
-	
+
     public int chat_id;
-    
+
     public ArrayList<Long> chat_members;
     public Boolean push_enabled = true;
-    
+
     public Long admin_id;
-    
+
     public Long users_count;
-    
+
     public boolean is_deleted;
     public boolean is_important;
-    
+
     public String photo_50;
     public String photo_100;
     public String photo_200;
-	
+
     public long unread;
     public long count;
     public int flag;
@@ -103,8 +101,8 @@ public class VKMessage implements Serializable {
         if (atts != null) {
             message.attachments = VKAttachment.parseArray(atts);
         }
-		
-		JSONArray messages = source.optJSONArray("fwd_messages");
+
+        JSONArray messages = source.optJSONArray("fwd_messages");
         if (messages != null) {
             message.fws_messages = new ArrayList<>(messages.length());
             for (int i = 0; i < messages.length(); i++) {

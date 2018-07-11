@@ -12,12 +12,12 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
+import com.procsec.fast.R;
 import com.procsec.fast.vkapi.VKApi;
 import com.procsec.fast.vkapi.model.VKMessageAttachment;
 
 import java.util.ArrayList;
 
-import ru.lischenko_dev.fastmessenger.R;
 
 
 public class FragmentAudio extends Fragment {

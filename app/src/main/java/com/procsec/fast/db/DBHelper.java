@@ -1,15 +1,12 @@
 package com.procsec.fast.db;
 
-import android.database.sqlite.*;
-import android.util.*;
-import com.procsec.fast.common.*;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import com.procsec.fast.common.FApp;
 
 public class DBHelper extends SQLiteOpenHelper {
-    private static final String LOG_TAG = "Euphoria.Database";
-
-    private static final int DATABASE_VERSION = 6;
-    private static final String DATABASE_NAME = "cache.db";
-
     /**
      * Tables
      */
@@ -25,7 +22,6 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String USER_GROUP_TABLE = "user_group";
     public static final String STATS_MESSAGES_TABLE = "stats_messages";
     public static final String FAILED_MESSAGES_TABLE = "failed_messages";
-
     /**
      * Columns
      */
@@ -91,141 +87,143 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String TYPE = "type";
     public static final String DESCRIPTION = "description";
     public static final String MEMBERS_COUNT = "members_count";
-
+    private static final String LOG_TAG = "Euphoria.Database";
+    private static final int DATABASE_VERSION = 6;
+    private static final String DATABASE_NAME = "cache.db";
     private static final String SQL_CREATE_TABLE_USERS = "CREATE TABLE " + USERS_TABLE +
-	" (" + USER_ID + " INTEGER PRIMARY KEY ON CONFLICT REPLACE, " +
-	" [" + FIRST_NAME + "] VARCHAR(255), " +
-	" [" + LAST_NAME + "] VARCHAR(255), " +
-	" [" + SCREEN_NAME + "] VARCHAR(255), " +
-	" [" + NICKNAME + "] VARCHAR(255), " +
-	" [" + ONLINE + "] INTEGER, " +
-	" [" + ONLINE_MOBILE + "] INTEGER, " +
-	" [" + ONLINE_APP + "] INTEGER, " +
-	" [" + STATUS + "] VARCHAR(255), " +
-	" [" + IS_FRIEND + "] VARCHAR(255), " +
-	" [" + LAST_SEEN + "] INTEGER, " +
-	" [" + PHOTO_50 + "] VARCHAR(255), " +
-	" [" + PHOTO_100 + "] VARCHAR(255), " +
-	" [" + PHOTO_200 + "] VARCHAR(255), " +
-	" [" + PHOTO_400 + "] VARCHAR(255), " +
-	" [" + PHOTO_MAX + "] VARCHAR(255), " +
-	" [" + DEACTIVATED + "] VARCHAR(255), " +
-	" [" + SEX + "] INTEGER" +
-	");";
+            " (" + USER_ID + " INTEGER PRIMARY KEY ON CONFLICT REPLACE, " +
+            " [" + FIRST_NAME + "] VARCHAR(255), " +
+            " [" + LAST_NAME + "] VARCHAR(255), " +
+            " [" + SCREEN_NAME + "] VARCHAR(255), " +
+            " [" + NICKNAME + "] VARCHAR(255), " +
+            " [" + ONLINE + "] INTEGER, " +
+            " [" + ONLINE_MOBILE + "] INTEGER, " +
+            " [" + ONLINE_APP + "] INTEGER, " +
+            " [" + STATUS + "] VARCHAR(255), " +
+            " [" + IS_FRIEND + "] VARCHAR(255), " +
+            " [" + LAST_SEEN + "] INTEGER, " +
+            " [" + PHOTO_50 + "] VARCHAR(255), " +
+            " [" + PHOTO_100 + "] VARCHAR(255), " +
+            " [" + PHOTO_200 + "] VARCHAR(255), " +
+            " [" + PHOTO_400 + "] VARCHAR(255), " +
+            " [" + PHOTO_MAX + "] VARCHAR(255), " +
+            " [" + DEACTIVATED + "] VARCHAR(255), " +
+            " [" + SEX + "] INTEGER" +
+            ");";
 
     private static final String SQL_CREATE_TABLE_FRIENDS = "CREATE TABLE " + FRIENDS_TABLE +
-	" (" + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-	" [" + USER_ID + "] INTEGER, " +
-	" [" + FRIEND_ID + "] INTEGER " +
-	");";
+            " (" + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            " [" + USER_ID + "] INTEGER, " +
+            " [" + FRIEND_ID + "] INTEGER " +
+            ");";
 
     private static final String SQL_CREATE_TABLE_DIALOGS = "CREATE TABLE " + DIALOGS_TABLE +
-	" (" + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-	" [" + MESSAGE_ID + "] INTEGER, " +
-	" [" + USER_ID + "] INTEGER, " +
-	" [" + CHAT_ID + "] INTEGER, " +
-	" [" + TITLE + "] VARCHAR(255), " +
-	" [" + BODY + "] VARCHAR(255), " +
-	" [" + IS_OUT + "] INTEGER, " +
-	" [" + READ_STATE + "] INTEGER, " +
-	" [" + USERS_COUNT + "] INTEGER, " +
-	" [" + UNREAD_COUNT + "] INTEGER, " +
-	" [" + DATE + "] INTEGER , " +
-	" [" + PHOTO_50 + "] VARCHAR(255), " +
-	" [" + PHOTO_100 + "] VARCHAR(255)" +
-	");";
+            " (" + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            " [" + MESSAGE_ID + "] INTEGER, " +
+            " [" + USER_ID + "] INTEGER, " +
+            " [" + CHAT_ID + "] INTEGER, " +
+            " [" + TITLE + "] VARCHAR(255), " +
+            " [" + BODY + "] VARCHAR(255), " +
+            " [" + IS_OUT + "] INTEGER, " +
+            " [" + READ_STATE + "] INTEGER, " +
+            " [" + USERS_COUNT + "] INTEGER, " +
+            " [" + UNREAD_COUNT + "] INTEGER, " +
+            " [" + DATE + "] INTEGER , " +
+            " [" + PHOTO_50 + "] VARCHAR(255), " +
+            " [" + PHOTO_100 + "] VARCHAR(255)" +
+            ");";
 
     private final static String SQL_CREATE_TABLE_MESSAGES = "CREATE TABLE " + MESSAGES_TABLE +
-	" (" + _ID + " INTEGER PRIMARY KEY, " +
-	" [" + MESSAGE_ID + "] INTEGER, " +
-	" [" + USER_ID + "] INTEGER, " +
-	" [" + CHAT_ID + "] INTEGER, " +
-	" [" + BODY + "] VARCHAR(255), " +
-	" [" + DATE + "] INTEGER, " +
-	" [" + READ_STATE + "] INTEGER, " +
-	" [" + IS_OUT + "] INTEGER, " +
-	" [" + IMPORTANT + "] INTEGER, " +
-	" [" + ATTACHMENTS + "] BLOB, " +
-	" [" + FWD_MESSAGES + "] BLOB" +
-	");";
+            " (" + _ID + " INTEGER PRIMARY KEY, " +
+            " [" + MESSAGE_ID + "] INTEGER, " +
+            " [" + USER_ID + "] INTEGER, " +
+            " [" + CHAT_ID + "] INTEGER, " +
+            " [" + BODY + "] VARCHAR(255), " +
+            " [" + DATE + "] INTEGER, " +
+            " [" + READ_STATE + "] INTEGER, " +
+            " [" + IS_OUT + "] INTEGER, " +
+            " [" + IMPORTANT + "] INTEGER, " +
+            " [" + ATTACHMENTS + "] BLOB, " +
+            " [" + FWD_MESSAGES + "] BLOB" +
+            ");";
 
 
     private final static String SQL_CREATE_TABLE_STATS_MESSAGES = "CREATE TABLE " + STATS_MESSAGES_TABLE +
-	" (" + _ID + " INTEGER PRIMARY KEY, " +
-	" [" + USER_ID + "] INTEGER, " +
-	" [" + CHAT_ID + "] INTEGER, " +
-	" [" + TOTAL_COUNT + "] INTEGER, " +
-	" [" + INCOMING_COUNT + "] INTEGER, " +
-	" [" + OUTGOING_COUNT + "] INTEGER" +
-	");";
+            " (" + _ID + " INTEGER PRIMARY KEY, " +
+            " [" + USER_ID + "] INTEGER, " +
+            " [" + CHAT_ID + "] INTEGER, " +
+            " [" + TOTAL_COUNT + "] INTEGER, " +
+            " [" + INCOMING_COUNT + "] INTEGER, " +
+            " [" + OUTGOING_COUNT + "] INTEGER" +
+            ");";
 
     private final static String SQL_CREATE_TABLE_AUDIOS = "CREATE TABLE " + AUDIOS_TABLE +
-	" (" + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-	" [" + AUDIO_ID + "] INTEGER, " +
-	" [" + OWNER_ID + "] INTEGER, " +
-	" [" + ARTIST + "] VARCHAR(255), " +
-	" [" + TITLE + "] VARCHAR(255), " +
-	" [" + DURATION + "] INTEGER, " +
-	" [" + URL + "] VARCHAR(255), " +
-	" [" + LYRICS_ID + "] INTEGER " +
-	");";
+            " (" + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            " [" + AUDIO_ID + "] INTEGER, " +
+            " [" + OWNER_ID + "] INTEGER, " +
+            " [" + ARTIST + "] VARCHAR(255), " +
+            " [" + TITLE + "] VARCHAR(255), " +
+            " [" + DURATION + "] INTEGER, " +
+            " [" + URL + "] VARCHAR(255), " +
+            " [" + LYRICS_ID + "] INTEGER " +
+            ");";
 
     private final static String SQK_CREATE_TABLE_PHOTOS = "CREATE TABLE " + PHOTOS_TABLE +
-	" (" + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-	" [" + ALBUM_ID + "] INTEGER, " +
-	" [" + OWNER_ID + "] INTEGER, " +
-	" [" + WIDTH + "] INTEGER, " +
-	" [" + HEIGHT + "] INTEGER, " +
-	" [" + DATE + "] INTEGER, " +
-	" [" + TEXT + "] VARCHAR(255), " +
-	" [" + PHOTO_75 + "] VARCHAR(255), " +
-	" [" + PHOTO_130 + "] VARCHAR(255), " +
-	" [" + PHOTO_604 + "] VARCHAR(255), " +
-	" [" + PHOTO_807 + "] VARCHAR(255), " +
-	" [" + PHOTO_1280 + "] VARCHAR(255), " +
-	" [" + PHOTO_2560 + "] VARCHAR(255)" +
-	");";
+            " (" + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            " [" + ALBUM_ID + "] INTEGER, " +
+            " [" + OWNER_ID + "] INTEGER, " +
+            " [" + WIDTH + "] INTEGER, " +
+            " [" + HEIGHT + "] INTEGER, " +
+            " [" + DATE + "] INTEGER, " +
+            " [" + TEXT + "] VARCHAR(255), " +
+            " [" + PHOTO_75 + "] VARCHAR(255), " +
+            " [" + PHOTO_130 + "] VARCHAR(255), " +
+            " [" + PHOTO_604 + "] VARCHAR(255), " +
+            " [" + PHOTO_807 + "] VARCHAR(255), " +
+            " [" + PHOTO_1280 + "] VARCHAR(255), " +
+            " [" + PHOTO_2560 + "] VARCHAR(255)" +
+            ");";
 
     private final static String SQL_CREATE_TABLE_DOCS = "CREATE TABLE " + DOCS_TABLE +
-	" (" + _ID + " INTEGER PRIMARY KEY, " +
-	" [" + DOC_ID + "] INTEGER, " +
-	" [" + OWNER_ID + "] INTEGER, " +
-	" [" + TITLE + "] VARCHAR(255), " +
-	" [" + SIZE + "] INTEGER, " +
-	" [" + TYPE + "] INTEGER, " +
-	" [" + EXT + "] VARCHAR(255), " +
-	" [" + URL + "] VARCHAR(255), " +
-	" [" + PHOTO_100 + "] VARCHAR(255), " +
-	" [" + PHOTO_130 + "] VARCHAR(255)" +
-	");";
+            " (" + _ID + " INTEGER PRIMARY KEY, " +
+            " [" + DOC_ID + "] INTEGER, " +
+            " [" + OWNER_ID + "] INTEGER, " +
+            " [" + TITLE + "] VARCHAR(255), " +
+            " [" + SIZE + "] INTEGER, " +
+            " [" + TYPE + "] INTEGER, " +
+            " [" + EXT + "] VARCHAR(255), " +
+            " [" + URL + "] VARCHAR(255), " +
+            " [" + PHOTO_100 + "] VARCHAR(255), " +
+            " [" + PHOTO_130 + "] VARCHAR(255)" +
+            ");";
 
     private final static String SQL_CREATE_TABLE_GROUPS = "CREATE TABLE " + GROUPS_TABLE +
-	" (" + GROUP_ID + " INTEGER PRIMARY KEY ON CONFLICT REPLACE, " +
-	" [" + NAME + "] VARCHAR(255), " +
-	" [" + SCREEN_NAME + "] VARCHAR(255), " +
-	" [" + DESCRIPTION + "] VARCHAR(255), " +
-	" [" + STATUS + "] VARCHAR(255), " +
-	" [" + TYPE + "] INTEGER, " +
-	" [" + IS_CLOSED + "] INTEGER, " +
-	" [" + IS_ADMIN + "] INTEGER, " +
-	" [" + ADMIN_LEVER + "] INTEGER, " +
-	" [" + PHOTO_50 + "] VARCHAR(255), " +
-	" [" + PHOTO_100 + "] VARCHAR(255), " +
-	" [" + MEMBERS_COUNT + "] INTEGER " +
-	");";
+            " (" + GROUP_ID + " INTEGER PRIMARY KEY ON CONFLICT REPLACE, " +
+            " [" + NAME + "] VARCHAR(255), " +
+            " [" + SCREEN_NAME + "] VARCHAR(255), " +
+            " [" + DESCRIPTION + "] VARCHAR(255), " +
+            " [" + STATUS + "] VARCHAR(255), " +
+            " [" + TYPE + "] INTEGER, " +
+            " [" + IS_CLOSED + "] INTEGER, " +
+            " [" + IS_ADMIN + "] INTEGER, " +
+            " [" + ADMIN_LEVER + "] INTEGER, " +
+            " [" + PHOTO_50 + "] VARCHAR(255), " +
+            " [" + PHOTO_100 + "] VARCHAR(255), " +
+            " [" + MEMBERS_COUNT + "] INTEGER " +
+            ");";
 
     private final static String SQL_CREATE_TABLE_USER_GROUP = "CREATE TABLE " + USER_GROUP_TABLE +
-	" (" + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-	" [" + GROUP_ID + "] INTEGER, " +
-	" [" + USER_ID + "] INTEGER " +
-	");";
+            " (" + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            " [" + GROUP_ID + "] INTEGER, " +
+            " [" + USER_ID + "] INTEGER " +
+            ");";
 
     private final static String SQL_CREATE_TABLE_FAILED_MESSAGES = "CREATE TABLE " + FAILED_MESSAGES_TABLE +
-	" (" + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-	" [" + USER_ID + "] INTEGER, " +
-	" [" + CHAT_ID + "] INTEGER, " +
-	" [" + BODY + "] VARCHAR(255)" +
-	");";
+            " (" + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            " [" + USER_ID + "] INTEGER, " +
+            " [" + CHAT_ID + "] INTEGER, " +
+            " [" + BODY + "] VARCHAR(255)" +
+            ");";
 
     private static final String SQL_DELETE_DOCS = "DROP TABLE IF EXISTS " + DOCS_TABLE;
     private static final String SQL_DELETE_USERS = "DROP TABLE IF EXISTS " + USERS_TABLE;
@@ -242,16 +240,16 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private static DBHelper instance;
 
+    private DBHelper() {
+        super(FApp.context, DATABASE_NAME, null, DATABASE_VERSION);
+    }
+
     public synchronized static DBHelper getInstance() {
         if (instance == null) {
             instance = new DBHelper();
         }
 
         return instance;
-    }
-
-    private DBHelper() {
-        super(FApp.context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override

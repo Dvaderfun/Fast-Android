@@ -1,9 +1,13 @@
 package com.procsec.fast.vkapi.model;
 
-import android.text.*;
-import com.procsec.fast.vkapi.*;
-import java.io.*;
-import org.json.*;
+import android.text.TextUtils;
+
+import com.procsec.fast.vkapi.VKApi;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.Serializable;
 
 
 public class VKAudio implements Serializable {
@@ -93,9 +97,6 @@ public class VKAudio implements Serializable {
      */
     public final static class Genre {
 
-        private Genre() {
-        }
-
         public final static int ROCK = 1;
         public final static int POP = 2;
         public final static int RAP_AND_HIPHOP = 3;
@@ -117,5 +118,7 @@ public class VKAudio implements Serializable {
         public final static int SPEECH = 19;
         public final static int ALTERNATIVE = 21;
         public final static int ELECTROPOP_AND_DISCO = 22;
+        private Genre() {
+        }
     }
 }

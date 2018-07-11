@@ -1,7 +1,6 @@
 package com.procsec.fast.vkapi;
 
-import com.procsec.fast.vkapi.*;
-import org.json.*;
+import org.json.JSONObject;
 
 /**
  * Created by user on 05.07.15.
@@ -9,11 +8,10 @@ import org.json.*;
 public class VKRequest {
 
     static VKApi api;
-    VKParams params;
-    VKRequestListener listener;
-
     static String access_token;
     static String api_id;
+    VKParams params;
+    VKRequestListener listener;
 
     public VKRequest(String methodName) {
         if (api == null) {

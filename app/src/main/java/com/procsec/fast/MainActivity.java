@@ -32,8 +32,6 @@ import com.squareup.picasso.Picasso;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import ru.lischenko_dev.fastmessenger.R;
-
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private NavigationView drawer_view;
@@ -42,6 +40,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ActionBarDrawerToggle toggle;
 
     private Account account;
+
+    public static void setTitle(ActionBar ab, String title) {
+        ab.setTitle(title);
+    }
+
+    public static void setTitle(Toolbar tb, String title) {
+        tb.setTitle(title);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,9 +104,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         VKUser u = MemoryCache.getUser(account.id);
 
-        ImageView avatar = header.findViewById(R.id.ivAva);
-        TextView name = header.findViewById(R.id.tvName);
-        TextView status = header.findViewById(R.id.tvStatus);
+        ImageView avatar = header.findViewById(R.id.avatar);
+        TextView name = header.findViewById(R.id.name);
+        TextView status = header.findViewById(R.id.status);
 
         if (u != null) {
             account.photo_200 = u.photo_200;
@@ -232,14 +238,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (ab != null) {
             ab.setTitle(title);
         }
-    }
-
-    public static void setTitle(ActionBar ab, String title) {
-        ab.setTitle(title);
-    }
-
-    public static void setTitle(Toolbar tb, String title) {
-        tb.setTitle(title);
     }
 
     @Override

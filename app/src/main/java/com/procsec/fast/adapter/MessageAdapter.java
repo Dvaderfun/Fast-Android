@@ -1,51 +1,51 @@
 package com.procsec.fast.adapter;
 
 
-import android.content.*;
-import android.graphics.*;
-import android.graphics.drawable.*;
-import android.net.*;
-import android.support.v7.widget.*;
-import android.text.*;
-import android.view.*;
-import android.widget.*;
-import com.procsec.fast.*;
-import com.procsec.fast.common.*;
-import com.procsec.fast.util.*;
-import com.procsec.fast.vkapi.model.*;
-import com.squareup.picasso.Picasso;
-import java.text.*;
-import java.util.*;
-import org.greenrobot.eventbus.*;
-import com.procsec.fast.view.*;
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import ru.lischenko_dev.fastmessenger.R;
+import com.procsec.fast.MessagesActivity;
+import com.procsec.fast.R;
+import com.procsec.fast.common.ThemeManager;
+import com.procsec.fast.util.ArrayUtil;
+import com.procsec.fast.util.Utils;
+import com.procsec.fast.view.CircleImageView;
+import com.procsec.fast.vkapi.model.VKMessage;
 
-public class MessageAdapter extends BaseAdapterr<VKMessage, MessageAdapter.ViewHolder> {
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
-	private int chatId;
+import java.util.ArrayList;
+
+
+public class MessageAdapter extends BaseAdapter<VKMessage, MessageAdapter.ViewHolder> {
+
+    private int chatId;
     private int userId;
-	
-	private LayoutInflater inflater;
-	
-	public class SendStatus {
-        public static final int EOOR = -1;
-        public static final int SENDING = 0;
-        public static final int SENT = 1;
-    }
-	
-	public MessageAdapter(Context context, ArrayList<VKMessage> messages, int chatId, int userId) {
+
+    private LayoutInflater inflater;
+
+    public MessageAdapter(Context context, ArrayList<VKMessage> messages, int chatId, int userId) {
         super(context, messages);
-		
-		this.chatId = chatId;
+
+        this.chatId = chatId;
         this.userId = userId;
 
         this.inflater = LayoutInflater.from(context);
-        
+
         EventBus.getDefault().register(this);
     }
-	
-	@Subscribe(threadMode = ThreadMode.MAIN)
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onNewMessage(VKMessage message) {
         if (message.is_out) {
             return;
@@ -58,32 +58,32 @@ public class MessageAdapter extends BaseAdapterr<VKMessage, MessageAdapter.ViewH
         MessagesActivity root = (MessagesActivity) context;
         root.getRecycler().scrollToPosition(getMessagesCount());
     }
-	
-	@Override
-	public MessageAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-		View v = inflater.inflate(R.layout.activity_messages_list, parent, false);
-        return new ViewHolder(v);
-	}
 
-	@Override
-	public void onBindViewHolder(MessageAdapter.ViewHolder holder, int position) {
-		
-		final VKMessage item = getItem(position);
-		
-		holder.main_container.setGravity(item.is_out ? Gravity.END : Gravity.START);
-		
-		holder.body.setText(item.body + "        ");
-		
-		Drawable bg = context.getResources().getDrawable(R.drawable.msg_bg);
-		bg.setTint(item.is_out ? ThemeManager.color : Color.LTGRAY);
-		
-		holder.body.setBackground(bg);
-		
-		holder.date.setText(Utils.parseDate(item.date * 1000));
-		
-	}
-	
-	public int getMessagesCount() {
+    @Override
+    public MessageAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = inflater.inflate(R.layout.activity_messages_list, parent, false);
+        return new ViewHolder(v);
+    }
+
+    @Override
+    public void onBindViewHolder(MessageAdapter.ViewHolder holder, int position) {
+
+        final VKMessage item = getItem(position);
+
+        holder.main_container.setGravity(item.is_out ? Gravity.END : Gravity.START);
+
+        holder.body.setText(item.body + "        ");
+
+        Drawable bg = context.getResources().getDrawable(R.drawable.msg_bg);
+        bg.setTint(item.is_out ? ThemeManager.color : Color.LTGRAY);
+
+        holder.body.setBackground(bg);
+
+        holder.date.setText(Utils.parseDate(item.date * 1000));
+
+    }
+
+    public int getMessagesCount() {
         return getValues().size();
     }
 
@@ -116,37 +116,43 @@ public class MessageAdapter extends BaseAdapterr<VKMessage, MessageAdapter.ViewH
         }
     }
 
-	public void destroy() {
+    public void destroy() {
         EventBus.getDefault().unregister(this);
     }
-	
-	@Override
-	public int getItemCount() {
-		return super.getItemCount();
-	}
-	
-	static class ViewHolder extends RecyclerView.ViewHolder {
-		CircleImageView avatar;
-		
-		TextView body;
-		TextView date;
-		
-		LinearLayout main_container;
-		LinearLayout body_container;
-		LinearLayout attach_container;
-		LinearLayout bubble;
-		
-		public ViewHolder(View v) {
-			super(v);
-			
-			body = v.findViewById(R.id.body);
-			date = v.findViewById(R.id.date);
-			
-			main_container = v.findViewById(R.id.main_container);
-			body_container = v.findViewById(R.id.body_container);
-			attach_container = v.findViewById(R.id.attach_container);
-			bubble = v.findViewById(R.id.bubble);
-		}
-	}
-	
+
+    @Override
+    public int getItemCount() {
+        return super.getItemCount();
+    }
+
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        CircleImageView avatar;
+
+        TextView body;
+        TextView date;
+
+        LinearLayout main_container;
+        LinearLayout body_container;
+        LinearLayout attach_container;
+        LinearLayout bubble;
+
+        public ViewHolder(View v) {
+            super(v);
+
+            body = v.findViewById(R.id.body);
+            date = v.findViewById(R.id.date);
+
+            main_container = v.findViewById(R.id.main_container);
+            body_container = v.findViewById(R.id.body_container);
+            attach_container = v.findViewById(R.id.attach_container);
+            bubble = v.findViewById(R.id.bubble);
+        }
+    }
+
+    public class SendStatus {
+        public static final int ERROR = -1;
+        public static final int SENDING = 0;
+        public static final int SENT = 1;
+    }
+
 }

@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
+import com.procsec.fast.R;
 import com.procsec.fast.fragment.FragmentDialogs;
 import com.procsec.fast.fragment.FragmentFriends;
 import com.procsec.fast.fragment.FragmentGroups;
@@ -12,18 +13,15 @@ import com.procsec.fast.fragment.FragmentSettings;
 
 import java.util.ArrayList;
 
-import ru.lischenko_dev.fastmessenger.R;
 
 public class FragmentTransHelper {
-
-    private static Fragment current_fragment;
-    private static Integer layout_id;
 
     public static FragmentDialogs fragmentDialogs;
     public static FragmentFriends fragmentFriends;
     public static FragmentGroups fragmentGroups;
     public static FragmentSettings fragmentSettings;
-
+    private static Fragment current_fragment;
+    private static Integer layout_id;
     private static FragmentTransaction transaction;
     private static FragmentManager manager;
 

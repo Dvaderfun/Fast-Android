@@ -1,6 +1,6 @@
 package com.procsec.fast.io;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
 
 public class BytesOutputStream extends ByteArrayOutputStream {
     /**

@@ -1,32 +1,34 @@
 package com.procsec.fast.util;
 
-import android.app.*;
-import android.content.*;
-import android.util.*;
-import com.procsec.fast.vkapi.*;
-import com.procsec.fast.vkapi.model.*;
-import java.io.*;
-import java.util.*;
-import org.greenrobot.eventbus.*;
-import org.json.*;
+import android.app.Activity;
+import android.content.Context;
+import android.util.Log;
+
+import com.procsec.fast.vkapi.KException;
+import com.procsec.fast.vkapi.VKApi;
+import com.procsec.fast.vkapi.model.VKMessage;
+
+import org.greenrobot.eventbus.EventBus;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class LongPoll {
 
-    private VKApi mApi;
-    private Context mContext;
-    private static LongPoll instance = null;
-    private ArrayList<Listener> mListeners = null;
-    private Object[] pollServer;
-
-    public boolean isRunning;
-
     public static final String TAG = "VKLongPollHelper";
-
-
+    private static LongPoll instance = null;
+    public boolean isRunning;
     String key;
     String server;
     Long ts;
     Long pts;
+    private VKApi mApi;
+    private Context mContext;
+    private ArrayList<Listener> mListeners = null;
+    private Object[] pollServer;
 
     private LongPoll(Context context, VKApi api) {
         this.mApi = api;
@@ -63,43 +65,6 @@ public class LongPoll {
             mListeners = new ArrayList<>();
         }
         mListeners.add(listener);
-    }
-
-
-    private class VKLongPollTask extends Thread {
-        @Override
-        public void run() {
-            while (isRunning) {
-                if (!Utils.hasConnection(mContext)) {
-                    try {
-                        Thread.sleep(5_000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    continue;
-                }
-                try {
-                    if (pollServer == null) {
-                        getServer();
-                    }
-                    String response = getResponse();
-                    JSONObject root = new JSONObject(response);
-
-                    Long tsResponse = root.optLong("ts");
-                    JSONArray updates = root.getJSONArray("updates");
-
-
-                    ts = tsResponse;
-                    if (updates.length() != 0) {
-                        process(updates);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    pollServer = null;
-                }
-
-            }
-        }
     }
 
     private String getResponse() throws IOException {
@@ -283,6 +248,42 @@ public class LongPoll {
         void onChangeMessagesCount(long newCount);
 
 
+    }
+
+    private class VKLongPollTask extends Thread {
+        @Override
+        public void run() {
+            while (isRunning) {
+                if (!Utils.hasConnection(mContext)) {
+                    try {
+                        Thread.sleep(5_000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    continue;
+                }
+                try {
+                    if (pollServer == null) {
+                        getServer();
+                    }
+                    String response = getResponse();
+                    JSONObject root = new JSONObject(response);
+
+                    Long tsResponse = root.optLong("ts");
+                    JSONArray updates = root.getJSONArray("updates");
+
+
+                    ts = tsResponse;
+                    if (updates.length() != 0) {
+                        process(updates);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    pollServer = null;
+                }
+
+            }
+        }
     }
 
 }

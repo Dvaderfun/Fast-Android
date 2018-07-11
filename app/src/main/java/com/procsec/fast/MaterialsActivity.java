@@ -15,8 +15,6 @@ import com.procsec.fast.fragment.material.FragmentDocuments;
 import com.procsec.fast.fragment.material.FragmentPhoto;
 import com.procsec.fast.fragment.material.FragmentVideo;
 
-import ru.lischenko_dev.fastmessenger.R;
-
 
 public class MaterialsActivity extends AppCompatActivity {
 

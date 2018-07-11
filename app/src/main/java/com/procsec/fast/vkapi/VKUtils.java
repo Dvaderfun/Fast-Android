@@ -10,6 +10,9 @@ import java.util.regex.Pattern;
 
 public class VKUtils {
 
+    private static String pattern_string_profile_id = "^(id)?(\\d{1,10})$";
+    private static Pattern pattern_profile_id = Pattern.compile(pattern_string_profile_id);
+
     public static String extractPattern(String string, String pattern) {
         Pattern p = Pattern.compile(pattern);
         Matcher m = p.matcher(string);
@@ -46,9 +49,6 @@ public class VKUtils {
                 e.printStackTrace();
             }
     }
-
-    private static String pattern_string_profile_id = "^(id)?(\\d{1,10})$";
-    private static Pattern pattern_profile_id = Pattern.compile(pattern_string_profile_id);
 
     public static String parseProfileId(String text) {
         Matcher m = pattern_profile_id.matcher(text);

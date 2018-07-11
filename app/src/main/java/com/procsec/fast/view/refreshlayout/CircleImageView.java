@@ -11,7 +11,6 @@ import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.support.v4.view.ViewCompat;
 import android.view.animation.Animation;
-import android.widget.ImageView;
 
 class CircleImageView extends android.support.v7.widget.AppCompatImageView {
 
@@ -61,8 +60,8 @@ class CircleImageView extends android.support.v7.widget.AppCompatImageView {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         if (!elevationSupported()) {
-            setMeasuredDimension(getMeasuredWidth() + mShadowRadius*2, getMeasuredHeight()
-                    + mShadowRadius*2);
+            setMeasuredDimension(getMeasuredWidth() + mShadowRadius * 2, getMeasuredHeight()
+                    + mShadowRadius * 2);
         }
     }
 
@@ -108,7 +107,7 @@ class CircleImageView extends android.support.v7.widget.AppCompatImageView {
             mShadowRadius = shadowRadius;
             mCircleDiameter = circleDiameter;
             mRadialGradient = new RadialGradient(mCircleDiameter / 2, mCircleDiameter / 2,
-                    mShadowRadius, new int[] {
+                    mShadowRadius, new int[]{
                     FILL_SHADOW_COLOR, Color.TRANSPARENT
             }, null, Shader.TileMode.CLAMP);
             mShadowPaint.setShader(mRadialGradient);

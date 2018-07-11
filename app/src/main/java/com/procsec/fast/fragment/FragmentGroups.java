@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
+import com.procsec.fast.R;
 import com.procsec.fast.common.ThemeManager;
 import com.procsec.fast.util.Utils;
 import com.procsec.fast.vkapi.VKApi;
@@ -20,7 +21,6 @@ import com.procsec.fast.vkapi.model.VKGroup;
 
 import java.util.ArrayList;
 
-import ru.lischenko_dev.fastmessenger.R;
 
 public class FragmentGroups extends Fragment {
 

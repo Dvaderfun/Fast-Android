@@ -20,8 +20,6 @@ import com.procsec.fast.common.ThemeManager;
 import com.procsec.fast.util.Constants;
 import com.procsec.fast.vkapi.Auth;
 
-import ru.lischenko_dev.fastmessenger.R;
-
 public class LoginActivity extends AppCompatActivity {
 
     private WebView webView;
@@ -34,7 +32,6 @@ public class LoginActivity extends AppCompatActivity {
         setTheme(ThemeManager.getCurrentTheme());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        setTitle("Login");
 
         tb = findViewById(R.id.toolbar);
         setSupportActionBar(tb);
@@ -78,21 +75,6 @@ public class LoginActivity extends AppCompatActivity {
         return true;
     }
 
-    private class VKWebViewClient extends WebViewClient {
-
-        @Override
-        public void onPageFinished(WebView view, String url) {
-            bar.setVisibility(View.GONE);
-            webView.setVisibility(View.VISIBLE);
-        }
-
-        @Override
-        public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            super.onPageStarted(view, url, favicon);
-            parseUrl(url);
-        }
-    }
-
     @Override
     public void onBackPressed() {
         if (webView.canGoBack())
@@ -100,7 +82,6 @@ public class LoginActivity extends AppCompatActivity {
         else
             finish();
     }
-
 
     private void parseUrl(String url) {
         try {
@@ -119,6 +100,21 @@ public class LoginActivity extends AppCompatActivity {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private class VKWebViewClient extends WebViewClient {
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            bar.setVisibility(View.GONE);
+            webView.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            super.onPageStarted(view, url, favicon);
+            parseUrl(url);
         }
     }
 
