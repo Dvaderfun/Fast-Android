@@ -3,7 +3,6 @@ package com.procsec.fast;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -12,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
+import android.webkit.ValueCallback;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
@@ -49,7 +49,12 @@ public class LoginActivity extends AppCompatActivity {
         CookieSyncManager.createInstance(this);
 
         CookieManager cookieManager = CookieManager.getInstance();
-        cookieManager.removeAllCookie();
+        cookieManager.removeAllCookies(new ValueCallback<Boolean>() {
+            @Override
+            public void onReceiveValue(Boolean aBoolean) {
+
+            }
+        });
 
         String url = Auth.getUrl(Constants.API_ID, Auth.getSettings());
         webView.loadUrl(url);
@@ -57,22 +62,25 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuItem ref = menu.add("Restart");
-        Drawable d = getResources().getDrawable(R.drawable.ic_refresh);
-        d.setTint(ThemeManager.color);
-        ref.setIcon(d);
-        ref.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        ref.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-
-            @Override
-            public boolean onMenuItemClick(MenuItem p1) {
-                recreate();
-                return false;
-            }
-
-        });
-
+        getMenuInflater().inflate(R.menu.activity_login, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.restart:
+                recreate();
+                break;
+            case R.id.proxy:
+                showProxyDialog();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void showProxyDialog() {
+        startActivity(new Intent(this, ProxyActivity.class));
     }
 
     @Override

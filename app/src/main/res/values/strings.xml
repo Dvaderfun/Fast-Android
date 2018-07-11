@@ -53,4 +53,18 @@
     <string name="title_changed">Title changed.</string>
     <string name="chat_title">Chat title</string>
     <string name="version_new">Version: %s</string>
+    <string name="restart">Restart</string>
+    <string name="proxy">Proxy</string>
+    <string name="vk_api_domen">VK Api Domen</string>
+    <string name="vk_oauth_domen">VK Oauth Domen</string>
+    <string name="debug">Debug</string>
+    <string name="template">Template</string>
+    <string name="message_template">Message template</string>
+    <string name="quickmoon_yellow_moon_description">Moon for QuickMoon®</string>
+    <string name="quickmoon_yellow_moon">Yellow moon</string>
+    <string name="quickmoon">QuickMoon®</string>
+    <string name="functional">Functional</string>
+    <string name="accent_color">Accent color</string>
+    <string name="interface_title">Interface</string>
+    <string name="proxy_servers">Your proxy\'s servers</string>
 </resources>

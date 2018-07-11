@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <EditTextPreference
+        android:defaultValue="api.vk.com"
+        android:key="api_l"
+        android:title="@string/vk_api_domen" />
+
+    <EditTextPreference
+        android:defaultValue="oauth.vk.com"
+        android:key="oauth_l"
+        android:title="@string/vk_oauth_domen" />
+
+    <PreferenceScreen
+        android:key="proxys"
+        android:summary="@string/proxy_servers"
+        android:title="@string/proxy" />
+
+</PreferenceScreen>

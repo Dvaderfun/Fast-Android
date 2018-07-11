@@ -3,7 +3,6 @@ package com.procsec.fast.vkapi;
 import android.util.Log;
 
 import com.procsec.fast.util.Account;
-import com.procsec.fast.util.Constants;
 import com.procsec.fast.vkapi.model.VKAudio;
 import com.procsec.fast.vkapi.model.VKChat;
 import com.procsec.fast.vkapi.model.VKDocument;
@@ -32,37 +31,31 @@ import java.util.zip.GZIPInputStream;
 public class VKApi {
 
     public static final String TAG = "Kate.Api";
-    public static final String BASE_URL = "https://api.vk.com/method/";
     public static final String API_VERSION = "5.80";
+
     private static final int MAX_TRIES = 3;
-    public static String access_token;
-    public static String api_id;
-    static String language = Locale.getDefault().getLanguage();
-    static boolean enable_compression = true;
-    private static VKApi mSingleton;
+
+    public static String API = "api.vk.com";
+    public static String OAUTH = "oauth.vk.com";
+
+    private static String BASE_URL;
+
+    private static String language = Locale.getDefault().getLanguage();
+
     private static Account account;
 
-    public VKApi(String access_token, String api_id) {
-        this.access_token = access_token;
-        this.api_id = api_id;
+    public VKApi() {
+        initBaseUrl();
     }
 
-    public static VKApi init(Account n_account) {
-        account = n_account;
-        return new VKApi(n_account.token, Constants.API_ID);
+    private void initBaseUrl() {
+        BASE_URL = "https://" + API + "/";
     }
 
     public static Account getAccount() {
         if (account == null) account = new Account();
         account.restore();
         return account;
-    }
-
-    public static synchronized VKApi init(String access_token, String api_id) {
-        if (mSingleton == null) {
-            mSingleton = new VKApi(access_token, Constants.API_ID);
-        }
-        return mSingleton;
     }
 
     private static void checkError(JSONObject root, String url) throws JSONException, KException {
@@ -83,7 +76,7 @@ public class VKApi {
             JSONArray errors = root.getJSONArray("execute_errors");
             if (errors.length() == 0)
                 return;
-            //only first error is processed if there are multiple
+
             JSONObject error = errors.getJSONObject(0);
             int code = error.getInt("error_code");
             String message = error.getString("error_msg");
@@ -144,18 +137,16 @@ public class VKApi {
             connection.setDoOutput(is_post);
             connection.setDoInput(true);
             connection.setRequestMethod(is_post ? "POST" : "GET");
-            // connection.setRequestMethod("POST");
-            if (enable_compression)
-                connection.setRequestProperty("Accept-Encoding", "gzip");
+            connection.setRequestProperty("Accept-Encoding", "gzip");
             if (is_post)
                 connection.getOutputStream().write(body.getBytes("UTF-8"));
             int code = connection.getResponseCode();
+
             Log.i(TAG, "code=" + code);
-            //It may happen due to keep-alive problem http://stackoverflow.com/questions/1440957/httpurlconnection-getresponsecode-returns-1-on-second-invocation
+
             if (code == -1)
                 throw new WrongResponseCodeException("Network error");
-            //может стоит проверить на код 200
-            //on error can also read error stream from connection.
+
             InputStream is = new BufferedInputStream(connection.getInputStream(), 8192);
             String enc = connection.getHeaderField("Content-Encoding");
             if (enc != null && enc.equalsIgnoreCase("gzip"))
@@ -191,24 +182,10 @@ public class VKApi {
         //quot в тексте сообщения из LongPoll - то есть в уведомлении
     }
 
-    public static VKApi get() {
-        return mSingleton;
-    }
-
 
     private static void addCaptchaParams(String captcha_key, String captcha_sid, VKParams params) {
         params.put("captcha_sid", captcha_sid);
         params.put("captcha_key", captcha_key);
-    }
-
-    static String idsToString(Integer[] ids) {
-        String result = "";
-
-        for (int i = 0; i < ids.length; i++) {
-            result += ids[i] + ((i + 1) < ids.length ? "," : "");
-        }
-
-        return result;
     }
 
     static <T> String arrayToString(Collection<T> items) {
@@ -390,7 +367,7 @@ public class VKApi {
         JSONObject root = sendRequest(params);
         JSONObject response = root.optJSONObject("response");
         JSONArray array = response.optJSONArray("items");
-        ArrayList<VKMessage> messages = parseMessages(array, false, 0, false, 0);
+        ArrayList<VKMessage> messages = VKMessage.parseArray(array);
         return messages;
     }
 
@@ -420,7 +397,7 @@ public class VKApi {
         JSONObject root = sendRequest(params, false);
         JSONObject response = root.optJSONObject("response");
         JSONArray array = response.optJSONArray("items");
-        ArrayList<VKMessage> messages = parseMessages(array, false, 0, false, 0);
+        ArrayList<VKMessage> messages = VKMessage.parseArray(array);
         return messages;
     }
 
@@ -465,20 +442,6 @@ public class VKApi {
             params.put("type", "typing");
         JSONObject root = sendRequest(params);
         return root.optInt("response");
-    }
-
-    private static ArrayList<VKMessage> parseMessages(JSONArray array, boolean from_history, long history_uid, boolean from_chat, long me) throws JSONException {
-//        ArrayList<VKMessage> messages = new ArrayList<VKMessage>();
-//        if (array != null) {
-//            int category_count = array.length();
-//            for (int i = 0; i < category_count; ++i) {
-//                JSONObject o = array.getJSONObject(i);
-////                VKMessage m = VKMessage.parseArray(o, from_history, history_uid, from_chat, me);
-//                VKMessage m = VKMessage.parseArray(o);
-//                messages.add(m);
-//            }
-//        }
-        return VKMessage.parseArray(array);
     }
 
     //http://vk.com/dev/messages.send
@@ -607,7 +570,7 @@ public class VKApi {
         params.put("code", code);
         JSONObject root = sendRequest(params);
         JSONArray response = root.optJSONArray("response");
-        return parseMessages(response, chat_id <= 0, user_id, chat_id > 0, me);
+        return VKMessage.parseArray(response);
     }
 
     /**
@@ -1366,7 +1329,7 @@ public class VKApi {
         JSONObject root = sendRequest(params);
         JSONObject response = root.optJSONObject("response");
         JSONArray array = response.optJSONArray("items");
-        ArrayList<VKMessage> messages = parseMessages(array, false, 0, false, 0);
+        ArrayList<VKMessage> messages = VKMessage.parseArray(array);
         return messages;
     }
 
@@ -1519,7 +1482,7 @@ public class VKApi {
         JSONObject root = sendRequest(params);
         JSONObject response = root.optJSONObject("response");
         JSONArray array = response.optJSONArray("items");
-        ArrayList<VKMessage> messages = parseMessages(array, false, 0, false, 0);
+        ArrayList<VKMessage> messages = VKMessage.parseArray(array);
         return messages;
     }
 

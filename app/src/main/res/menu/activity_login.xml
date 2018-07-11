@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/restart"
+        android:icon="@drawable/ic_refresh"
+        android:title="@string/restart"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/proxy"
+        android:icon="@drawable/ic_poll"
+        android:title="@string/proxy"
+        app:showAsAction="ifRoom" />
+</menu>

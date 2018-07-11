@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-	<PreferenceCategory android:title="Interface" />
-		
-	<ListPreference 
-		android:title="Accent color"
-		android:defaultValue="blue"
-		android:entries="@array/color_entries"
-		android:entryValues="@array/color_entries_values"
-		android:key="color" />
-	
-    <PreferenceCategory android:title="Functional" />
+    <PreferenceCategory android:title="@string/interface_title" />
+
+    <ListPreference
+        android:defaultValue="blue"
+        android:entries="@array/color_entries"
+        android:entryValues="@array/color_entries_values"
+        android:key="color"
+        android:title="@string/accent_color" />
+
+    <PreferenceCategory android:title="@string/functional" />
 
     <CheckBoxPreference
         android:defaultValue="false"
         android:key="quickmoon"
-        android:title="QuickMoon®" />
+        android:title="@string/quickmoon" />
 
     <CheckBoxPreference
         android:defaultValue="false"
         android:key="light_moon"
-        android:summary="Moon for QuickMoon®"
-        android:title="Yellow moon" />
-	
-	<EditTextPreference
+        android:summary="@string/quickmoon_yellow_moon_description"
+        android:title="@string/quickmoon_yellow_moon" />
+
+    <EditTextPreference
         android:id="@android:id/edit"
         android:key="template"
-        android:summary="Message template"
-        android:title="Template" />
-	
-	<PreferenceCategory android:title="Debug"/>
-	<EditTextPreference
-		android:title="VK Api Domen"
-		android:defaultValue="api.vk.com"
-		android:key="api_l" />
-	
-	<EditTextPreference
-		android:title="VK Oauth Domen"
-		android:defaultValue="oauth.vk.com"
-		android:key="oauth_l" />
-	
+        android:summary="@string/message_template"
+        android:title="@string/template" />
+
+    <PreferenceCategory android:title="@string/debug" />
+    <EditTextPreference
+        android:defaultValue="api.vk.com"
+        android:key="api_l"
+        android:title="@string/vk_api_domen" />
+
+    <EditTextPreference
+        android:defaultValue="oauth.vk.com"
+        android:key="oauth_l"
+        android:title="@string/vk_oauth_domen" />
+
 </PreferenceScreen>
