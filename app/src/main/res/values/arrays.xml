@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string-array name="color_entries">
+		<item>Blue</item>
+		<item>Teal</item>
+		<item>Red</item>
+		<item>Light Blue</item>
+		<item>Orange</item>
+		<item>Purple</item>
+		<item>Green</item>
+	</string-array>
+	
+	<string-array name="color_entries_values">
+		<item>blue</item>
+		<item>teal</item>
+		<item>red</item>
+		<item>lightblue</item>
+		<item>orange</item>
+		<item>purple</item>
+		<item>green</item>
+	</string-array>
+</resources>

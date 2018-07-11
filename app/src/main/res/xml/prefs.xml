@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<PreferenceCategory android:title="Interface" />
+		
+	<ListPreference 
+		android:title="Accent color"
+		android:defaultValue="blue"
+		android:entries="@array/color_entries"
+		android:entryValues="@array/color_entries_values"
+		android:key="color" />
+	
+    <PreferenceCategory android:title="Functional" />
+
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="quickmoon"
+        android:title="QuickMoon®" />
+
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="light_moon"
+        android:summary="Moon for QuickMoon®"
+        android:title="Yellow moon" />
+	
+	<EditTextPreference
+        android:id="@android:id/edit"
+        android:key="template"
+        android:summary="Message template"
+        android:title="Template" />
+	
+	<PreferenceCategory android:title="Debug"/>
+	<EditTextPreference
+		android:title="VK Api Domen"
+		android:defaultValue="api.vk.com"
+		android:key="api_l" />
+	
+	<EditTextPreference
+		android:title="VK Oauth Domen"
+		android:defaultValue="oauth.vk.com"
+		android:key="oauth_l" />
+	
+</PreferenceScreen>

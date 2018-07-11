@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="horizontal"
+	android:gravity="center_vertical">
+
+	<LinearLayout
+		android:id="@+id/container"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:weightSum="1.0"
+		android:padding="6dp"
+		android:layout_marginLeft="6dp"
+		android:layout_marginBottom="2dp"
+		android:layout_marginTop="4dp"
+		android:paddingTop="4dp">
+
+		<FrameLayout
+			android:layout_width="wrap_content"
+			android:layout_weight="0"
+			android:layout_height="wrap_content">
+
+			<com.procsec.fast.view.CircleImageView
+				android:id="@+id/avatar"
+				android:layout_width="55dp"
+				android:layout_height="55dp"
+				android:src="@drawable/camera_200"
+				android:layout_gravity="bottom|right"/>
+
+			<com.procsec.fast.view.CircleImageView
+				android:id="@+id/online"
+				android:layout_width="14dp"
+				android:layout_height="14dp"
+				android:src="@color/online"
+				app:border_color="#ffffff"
+				app:border_width="2dp"
+				android:layout_gravity="bottom|right"/>
+
+		</FrameLayout>
+
+		<LinearLayout
+			android:orientation="vertical"
+			android:layout_height="match_parent"
+			android:layout_width="wrap_content"
+			android:layout_marginStart="6dp"
+			android:layout_weight="1.0">
+
+			<TextView
+				android:id="@+id/title"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:singleLine="true"
+				android:textColor="#303030"
+				android:textSize="16sp"
+				tools:text="Имя Фамилия"
+				android:text="Sample"/>
+
+			<LinearLayout
+				android:id="@+id/body_container"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:gravity="center_vertical"
+				android:orientation="horizontal"
+				android:padding="4dp">
+
+				<com.procsec.fast.view.CircleImageView
+					android:id="@+id/avatar_small"
+					android:layout_width="25dp"
+					android:layout_height="25dp"
+					android:layout_marginRight="8dp"
+					android:src="@drawable/camera_200"/>
+
+				<TextView
+					android:id="@+id/body"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:gravity="center_vertical"
+					android:maxLines="1"
+					android:textAppearance="?android:attr/textAppearanceSmall"
+					tools:text="Сообщение"
+					android:textColor="#90000000"
+					android:textSize="12sp"/>
+
+			</LinearLayout>
+
+		</LinearLayout>
+
+		<LinearLayout
+			android:orientation="vertical"
+			android:layout_marginStart="6dp"
+			android:gravity="end"
+			android:layout_weight="0"
+			android:layout_height="match_parent"
+			android:layout_width="wrap_content">
+
+			<TextView
+				android:id="@+id/date"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:gravity="center"
+				android:singleLine="true"
+				android:textAppearance="?android:attr/textAppearanceSmall"
+				tools:text="Дата"
+				android:textColor="#70000000"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:id="@+id/counter"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="8dp"
+				android:gravity="center"
+				android:textColor="#FFFFFF"
+				android:padding="6dp"
+				android:textSize="12sp"/>
+
+		</LinearLayout>
+
+	</LinearLayout>
+
+</LinearLayout>
+

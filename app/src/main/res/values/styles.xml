@@ -1,0 +1,62 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar" parent="AppTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="ChatInfoTheme" parent="AppTheme.NoActionBar">
+        <item name="colorControlNormal">@android:color/white</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+	<style name="BlueTheme" parent="AppTheme.NoActionBar">
+		<item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+	</style>
+	
+	<style name="TealTheme" parent="AppTheme.NoActionBar">
+		<item name="colorPrimary">@color/colorPrimaryTeal</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryTeal</item>
+        <item name="colorAccent">@color/colorPrimaryTeal</item>
+	</style>
+		
+	<style name="RedTheme" parent="AppTheme.NoActionBar">
+		<item name="colorPrimary">@color/colorPrimaryRed</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryRed</item>
+        <item name="colorAccent">@color/colorPrimaryRed</item>
+	</style>
+	
+	<style name="LightBlueTheme" parent="AppTheme.NoActionBar">
+		<item name="colorPrimary">@color/colorPrimaryLightblue</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryLightblue</item>
+        <item name="colorAccent">@color/colorPrimaryLightblue</item>
+	</style>
+	
+	<style name="OrangeTheme" parent="AppTheme.NoActionBar">
+		<item name="colorPrimary">@color/colorPrimaryOrange</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryOrange</item>
+        <item name="colorAccent">@color/colorPrimaryOrange</item>
+	</style>
+	
+	<style name="PurpleTheme" parent="AppTheme.NoActionBar">
+		<item name="colorPrimary">@color/colorPrimaryPurple</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryPurple</item>
+        <item name="colorAccent">@color/colorPrimaryPurple</item>
+	</style>
+	
+	<style name="GreenTheme" parent="AppTheme.NoActionBar">
+		<item name="colorPrimary">@color/colorPrimaryGreen</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryGreen</item>
+        <item name="colorAccent">@color/colorPrimaryGreen</item>
+	</style>
+		
+</resources>

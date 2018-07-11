@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/lLayout_dialog"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingBottom="6dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="6dp">
+
+    <com.procsec.fast.view.CircleImageView
+        android:id="@+id/ivDoc"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginRight="5dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingBottom="3dp">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:text="Title"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#1a1a1a"
+            android:textSize="15dp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/tvArtist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:padding="1dp"
+            android:singleLine="true"
+            android:text="Artist"
+            android:textColor="#696969"
+            android:textSize="13dp" />
+
+    </LinearLayout>
+
+</LinearLayout>
+

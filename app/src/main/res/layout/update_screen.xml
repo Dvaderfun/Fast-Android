@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="Update!"
+		android:layout_centerHorizontal="true"
+		android:textSize="38sp"
+		android:textColor="#303030"
+		android:id="@+id/updatescreenTextView1"
+		android:layout_marginTop="25dp"/>
+
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="Version: %s"
+		android:layout_below="@id/updatescreenTextView1"
+		android:layout_centerHorizontal="true"
+		android:layout_marginTop="10dp"
+		android:textSize="18sp"
+		android:textColor="#505050"
+		android:id="@+id/version"/>
+
+	<LinearLayout
+		android:orientation="horizontal"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:weightSum="1.0"
+		android:id="@+id/updatescreenLinearLayout1"
+		android:gravity="right|center_vertical"
+		android:layout_marginTop="220dp">
+
+		<Button
+			style="@style/Widget.AppCompat.Button.Borderless"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Cancel"
+			android:id="@+id/cancel"/>
+
+		<Button
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Download"
+			android:backgroundTint="?colorPrimary"
+			android:id="@+id/download"
+			android:textColor="#FFFFFF"
+			android:layout_marginTop="10dp"
+			android:layout_marginBottom="10dp"
+			android:layout_marginRight="10dp"
+			android:layout_marginLeft="4dp"/>
+
+	</LinearLayout>
+
+</RelativeLayout>
+

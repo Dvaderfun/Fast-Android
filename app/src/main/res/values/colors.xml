@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color name="colorPrimary">#1565c0</color>
+    <color name="colorPrimaryTeal">#15C1AD</color>
+	<color name="colorPrimaryRed">#F31414</color>
+	<color name="colorPrimaryPurple">#9414F3</color>
+	<color name="colorPrimaryOrange">#F37014</color>
+	<color name="colorPrimaryLightblue">#149DF3</color>
+	<color name="colorPrimaryGreen">#10A632</color>
+    <color name="online">#7BB865</color>
+    <color name="bottom_view_bg">#ffffff</color>
+</resources>
